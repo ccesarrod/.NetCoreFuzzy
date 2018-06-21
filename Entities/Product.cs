@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace fuzzy.core.Models
+namespace fuzzy.core.Entities
 {
     public class Product
     {

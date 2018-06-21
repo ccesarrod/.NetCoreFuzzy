@@ -13,16 +13,33 @@
     <RootNamespace>fuzzy.core</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="CoreDatabase\**" />
+    <Compile Remove="NorthWindDataCore\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="CoreDatabase\**" />
+    <Content Remove="NorthWindDataCore\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="CoreDatabase\**" />
+    <EmbeddedResource Remove="NorthWindDataCore\**" />
+    <None Remove="CoreDatabase\**" />
+    <None Remove="NorthWindDataCore\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +48,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\product\product.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\category\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

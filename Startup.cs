@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using fuzzy.core.DataCore.Contracts;
+using fuzzy.core.DataCore.Repository;
+using fuzzy.core.DataCore;
+using fuzzy.core.Entities;
 
 namespace fuzzy_core
 {
@@ -27,6 +30,15 @@ namespace fuzzy_core
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<CustomerOrderContext>(options =>
+            {
+               // var str = @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=WebApp.Models.MultiTenantContext;Integrated Security=True";
+                options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
+            });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IRepository<Category>, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
