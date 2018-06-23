@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ProductComponent } from './product/product.component';
 import { ProductService } from './product/product.service';
 import { CategoryComponent } from './category/category.component';
+import { CategoryService } from './category/category.service';
+import { CategoryProductComponent } from './category-product/category-product.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { CategoryComponent } from './category/category.component';
     CounterComponent,
     FetchDataComponent,
     ProductComponent,
-    CategoryComponent
+    CategoryComponent,
+    CategoryProductComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,9 +35,11 @@ import { CategoryComponent } from './category/category.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'fetch-products', component: ProductComponent },
+      { path: 'fetch-categories', component: CategoryComponent },
+      {path: 'fetch-category-product/:id', component: CategoryProductComponent}
     ])
   ],
-  providers: [ProductService],
+  providers: [ProductService,CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

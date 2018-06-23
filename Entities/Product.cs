@@ -17,7 +17,8 @@ namespace fuzzy.core.Entities
         public short? UnitsOnOrder { get; set; }
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
-       // public virtual Category Category { get; set; }
+
+       // public  Category Category { get; set; }
 
        
     }

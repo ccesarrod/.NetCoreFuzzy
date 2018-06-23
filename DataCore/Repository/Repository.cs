@@ -33,8 +33,8 @@ namespace fuzzy.core.DataCore
 
         public IQueryable<TEntity> Find(Func<TEntity, bool> expresion)
         {
-            var x = GetAll().ToList();
-            return x.Where(expresion).AsQueryable();
+          
+            return Set.Where(expresion).AsQueryable();
         }
 
         public void Delete(TEntity entity)
