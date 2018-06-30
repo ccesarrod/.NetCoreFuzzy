@@ -14,6 +14,7 @@ import { ProductService } from './product/product.service';
 import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category.service';
 import { CategoryProductComponent } from './category-product/category-product.component';
+import {CartService } from './cart.service'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { CategoryProductComponent } from './category-product/category-product.co
       {path: 'fetch-category-product/:id', component: CategoryProductComponent}
     ])
   ],
-  providers: [ProductService,CategoryService],
+  providers: [ProductService,CategoryService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
