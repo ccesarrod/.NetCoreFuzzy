@@ -8,32 +8,34 @@
           <span class='icon-bar'></span>
         </button>
         <!--<a class='navbar-brand' [routerLink]='["/"]'>fuzzy_core</a>-->
-        <a id="lastVal"><img src="../../assets/glyphicons-203-shopping-cart.png" class="img-thumbnail bg-info" />({{itemsInCart}})</a>
+      
       </div>
-        <div class='clearfix'></div>
-        <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-          <ul class='nav navbar-nav'>
-            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-              <a [routerLink]='["/"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-home'></span> Home
-              </a>
-            </li>
-            <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/fetch-categories"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-education'></span> Categories
-              </a>
-            </li>
-            <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Fetch data
-              </a>
-            </li>
-            <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/fetch-products"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Products
-              </a>
-            </li>
-          </ul>
-        </div>
+        
+      <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
+        <ul class='nav navbar-nav'>
+          <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a [routerLink]='["/"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-home'></span> Home
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-categories"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-education'></span> Categories
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-th-list'></span> Fetch data
+            </a>
+          </li>
+          <li [routerLinkActive]='["link-active"]'>
+            <a [routerLink]='["/fetch-products"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-th-list'></span> Products
+            </a>
+          </li>
+        </ul>
+        <a id="lastVal" class="navbar-right navbar-btn"><img src="../../assets/glyphicons-203-shopping-cart.png" class="img-thumbnail bg-info" />({{itemsInCart}})</a>
+        
+      </div>
     </div>
 </div>

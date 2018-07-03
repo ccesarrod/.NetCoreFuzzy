@@ -1,8 +1,8 @@
 <div class="container">
-  <div class="list-group" *ngFor="let category of categories">
-    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
-      <a routerLink="/fetch-category-product/{{category.categoryID}}">
-        <img src="../../assets/Categories/{{'Cat' + category.categoryID + '.jpg'}}" alt="{{category.description}}" class="img-responsive"  />
+  <div *ngFor="let category of categories">
+    <div class="col-xs-6 col-md-3">
+      <a routerLink="/fetch-category-product/{{category.categoryID}}" class="thumbnail">
+        <img src="../../assets/Categories/{{'Cat' + category.categoryID + '.jpg'}}" alt="{{category.description}}"  />
       </a>
       <div class="text-left">
         <small class="text-muted">{{category.categoryName}}</small>
