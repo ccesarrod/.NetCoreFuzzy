@@ -8,6 +8,7 @@ using fuzzy.core.DataCore.Contracts;
 using fuzzy.core.DataCore.Repository;
 using fuzzy.core.DataCore;
 using fuzzy.core.Entities;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace fuzzy_core
 {
@@ -74,8 +75,8 @@ namespace fuzzy_core
 
                 if (env.IsDevelopment())
                 {
-                    // spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                   // spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

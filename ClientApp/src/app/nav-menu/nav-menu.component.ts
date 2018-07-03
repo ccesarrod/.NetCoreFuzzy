@@ -11,6 +11,7 @@ import { Product } from '../product/product.component';
 export class NavMenuComponent implements OnInit{
   isExpanded = false;
   shoppingCartItems$: Observable<Product[]>;
+  private itemsInCart: number;
 
   constructor(private cartService: CartService) {}
 
@@ -22,7 +23,7 @@ export class NavMenuComponent implements OnInit{
 
     this.shoppingCartItems$ = this.cartService.getItems();
 
-    this.shoppingCartItems$.subscribe(p => p);
+    this.shoppingCartItems$.subscribe(p => this.itemsInCart = p.length);
 
   }
   toggle() {

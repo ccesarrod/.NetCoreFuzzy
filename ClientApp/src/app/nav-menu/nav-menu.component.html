@@ -8,7 +8,7 @@
           <span class='icon-bar'></span>
         </button>
         <!--<a class='navbar-brand' [routerLink]='["/"]'>fuzzy_core</a>-->
-        <a id="lastVal"><img src="../../assets/glyphicons-203-shopping-cart.png" class="img-thumbnail bg-info" />({{(shoppingCartItems$ | async).length}})</a>
+        <a id="lastVal"><img src="../../assets/glyphicons-203-shopping-cart.png" class="img-thumbnail bg-info" />({{itemsInCart}})</a>
       </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
