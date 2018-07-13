@@ -1,6 +1,6 @@
-This is a .NET core  app that uses angular 5  in the front end. Not fully developed
+This is a .NET core  app that uses angular 5  in the front end. 
 
-To install
+To install:
 - Visual Studio 
     Download app.
     Build in Visual studio
@@ -9,4 +9,4 @@ To install
     Download app
     run npm install
 
-Now Testing from local
+under development
