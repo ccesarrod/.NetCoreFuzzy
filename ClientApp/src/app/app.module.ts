@@ -14,7 +14,8 @@ import { ProductService } from './product/product.service';
 import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category.service';
 import { CategoryProductComponent } from './category-product/category-product.component';
-import {CartService } from './cart.service'
+import {CartService } from './cart.service';
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {CartService } from './cart.service'
     FetchDataComponent,
     ProductComponent,
     CategoryComponent,
-    CategoryProductComponent
+    CategoryProductComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,7 +39,8 @@ import {CartService } from './cart.service'
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'fetch-products', component: ProductComponent },
       { path: 'fetch-categories', component: CategoryComponent },
-      {path: 'fetch-category-product/:id', component: CategoryProductComponent}
+      { path: 'fetch-category-product/:id', component: CategoryProductComponent },
+      { path: 'login', component:LoginComponent}
     ])
   ],
   providers: [ProductService,CategoryService,CartService],

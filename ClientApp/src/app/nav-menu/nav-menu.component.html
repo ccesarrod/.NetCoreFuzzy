@@ -33,12 +33,16 @@
               <span class='glyphicon glyphicon-th-list'></span> Products
             </a>
           </li>
+          
         </ul>
-        
-        <a id="lastVal" class="navbar-right navbar-btn">
-        <img src="../../assets/glyphicons-203-shopping-cart.png" class="img-thumbnail bg-info" />({{itemsInCart}})
-        </a>
-        
+        <ul class="nav navbar-nav navbar-right">
+          <li style="float:right">
+            <a [routerLink]='["/fetch-categories"]' (click)='collapse()'>
+              <span class='glyphicon glyphicon-login'></span> Login
+            </a>
+
+          </li>
+        </ul>
       </div>
     </div>
 </div>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using fuzzy.core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace fuzzy_core.Controllers
 {
@@ -11,5 +9,6 @@ namespace fuzzy_core.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+
     }
 }
