@@ -1,48 +1,47 @@
-<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
-      <div class='navbar-header'>
-        <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-          <span class='sr-only'>Toggle navigation</span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-          <span class='icon-bar'></span>
-        </button>
-        <!--<a class='navbar-brand' [routerLink]='["/"]'>fuzzy_core</a>-->
-      
-      </div>
-        
-      <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-        <ul class='nav navbar-nav'>
-          <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-            <a [routerLink]='["/"]' (click)='collapse()'>
-              <span class='glyphicon glyphicon-home'></span> Home
-            </a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a [routerLink]='["/fetch-categories"]' (click)='collapse()'>
-              <span class='glyphicon glyphicon-education'></span> Categories
-            </a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a [routerLink]='["/fetch-data"]' (click)='collapse()'>
-              <span class='glyphicon glyphicon-th-list'></span> Fetch data
-            </a>
-          </li>
-          <li [routerLinkActive]='["link-active"]'>
-            <a [routerLink]='["/fetch-products"]' (click)='collapse()'>
-              <span class='glyphicon glyphicon-th-list'></span> Products
-            </a>
-          </li>
-          
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li style="float:right">
-            <a [routerLink]='["/fetch-categories"]' (click)='collapse()'>
-              <span class='glyphicon glyphicon-login'></span> Login
-            </a>
 
-          </li>
-        </ul>
-      </div>
+  <div class='navbar navbar-expand-lg navbar-dark bg-dark'>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+      <span class="navbar-toggler-icon"></span>
+
+    </button>
+    <!--<a class='navbar-brand' [routerLink]='["/"]'>fuzzy_core</a>-->
+
+
+
+    <div  class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }' class="nav-item active">
+          <a [routerLink]='["/"]' (click)='collapse()' class="nav-link">
+            <span class='sr-only glyphicon glyphicon-home'></span> Home
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/fetch-categories"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-education'></span> Categories
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/fetch-data"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-th-list'></span> Fetch data
+          </a>
+        </li>
+        <li [routerLinkActive]='["link-active"]' class="nav-item active">
+          <a [routerLink]='["/fetch-products"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-th-list'></span> Products
+          </a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active" >
+          <a [routerLink]='["/login"]' (click)='collapse()' class="nav-link">
+            <span class='glyphicon glyphicon-login'></span> Login
+          </a>
+
+        </li>
+      </ul>
     </div>
-</div>
+  </div>
+

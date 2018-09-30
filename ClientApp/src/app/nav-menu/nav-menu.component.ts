@@ -5,8 +5,8 @@ import { Product } from '../product/product.component';
 
 @Component({
   selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  //styleUrls: ['./nav-menu.component.css']
+  templateUrl: './nav-menu.component.html'
+ 
 })
 export class NavMenuComponent implements OnInit{
   isExpanded = false;
