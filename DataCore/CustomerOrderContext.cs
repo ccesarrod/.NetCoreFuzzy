@@ -17,7 +17,7 @@ namespace fuzzy.core.DataCore
           
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Category>().ToTable("Categories");
-
+            modelBuilder.Entity<Customer>().ToTable("Customers");
           
 
             base.OnModelCreating(modelBuilder);
