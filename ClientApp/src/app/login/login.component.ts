@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { AuthenticationService } from '../services/authentication.service';
+
 
 
 @Component({
@@ -15,7 +18,9 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(
-    private formBuilder: FormBuilder    
+    private formBuilder: FormBuilder,
+    private loginService: AuthenticationService,
+    private router: Router,
     ) { }
 
   ngOnInit() {
@@ -24,6 +29,26 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     })   
 
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    this.loginService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
+       .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          console.error(error);
+          this.loading = false;
+        });
   }
 
 }

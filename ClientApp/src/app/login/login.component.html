@@ -1,6 +1,6 @@
 
 <div class="form-row login-form">  
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2>Login</h2>
     <h4>Use a local account to log in.</h4>
     <div class="form-group">

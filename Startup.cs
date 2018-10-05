@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using fuzzy.core.Services;
+using fuzzy.core.Models;
 
 namespace fuzzy_core
 {
@@ -45,7 +46,10 @@ namespace fuzzy_core
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
 
-           
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<CustomerOrderContext>()
+                .AddDefaultTokenProviders();
+
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -155,8 +159,8 @@ namespace fuzzy_core
 
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
