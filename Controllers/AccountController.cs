@@ -20,10 +20,10 @@ namespace fuzzy_core.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly AppSettings _appSettings;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager )
+        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager )
         {
             _customerService = customerService;
             _appSettings = appSettings.Value;
@@ -35,16 +35,18 @@ namespace fuzzy_core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]Login login)
         {
-            var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, lockoutOnFailure: false);
+               var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, lockoutOnFailure: false);
+            //var user1 = new ApplicationUser { UserName = login.Email, Email = login.Email};
+            //var result = await _userManager.CreateAsync(user1, login.Password);
 
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(login.Email);
-                string tokenString = GetToken(user.Email);
+                //string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
-                    email = user.Email,
-                    Token = tokenString
+                    email = user.Email
+                   
                 });
             }
 

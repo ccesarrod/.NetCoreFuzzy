@@ -1,5 +1,6 @@
 ﻿using fuzzy.core.DataCore.Contracts;
 using fuzzy.core.Entities;
+using fuzzy.core.Models;
 
 namespace fuzzy.core.DataCore.Repository
 {
@@ -11,4 +12,6 @@ namespace fuzzy.core.DataCore.Repository
 
     
     }
+
+   
 }

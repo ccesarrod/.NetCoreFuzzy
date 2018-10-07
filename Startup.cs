@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using fuzzy.core.Services;
 using fuzzy.core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace fuzzy_core
 {
@@ -42,14 +43,21 @@ namespace fuzzy_core
 
             services.AddDbContext<CustomerOrderContext>(options =>
             {
+               
                 // var str = @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=WebApp.Models.MultiTenantContext;Integrated Security=True";
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<CustomerOrderContext>()
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
+              
+            });
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+          
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -115,6 +123,7 @@ namespace fuzzy_core
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Customer>, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -142,6 +151,7 @@ namespace fuzzy_core
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
+          
 
             app.UseMvc(routes =>
             {
