@@ -1,4 +1,4 @@
-This is a .NET core  app that uses angular 5  in the front end. 
+This is a .NET core  app that uses angular 6 and  latest bootstrap  in the front end. The API are written in .NET core.
 
 To install:
 - Visual Studio 
