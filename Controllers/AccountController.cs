@@ -23,7 +23,7 @@ namespace fuzzy_core.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager )
+        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             _customerService = customerService;
             _appSettings = appSettings.Value;
@@ -35,18 +35,17 @@ namespace fuzzy_core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]Login login)
         {
-               var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, lockoutOnFailure: false);
-            //var user1 = new ApplicationUser { UserName = login.Email, Email = login.Email};
-            //var result = await _userManager.CreateAsync(user1, login.Password);
+            var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, lockoutOnFailure: false);
+
 
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(login.Email);
-                //string tokenString = GetToken(user.Email);
+
                 return Ok(new
                 {
                     email = user.Email
-                   
+
                 });
             }
 
@@ -66,7 +65,7 @@ namespace fuzzy_core.Controllers
             // return basic user info (without password) and token to store client side
             return Ok(new
             {
-                
+
                 email = user.Email,
                 Token = tokenString
             });
@@ -85,20 +84,9 @@ namespace fuzzy_core.Controllers
                 var result = await _userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    //  _logger.LogInformation("User created a new account with password.");
-
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { userId = user.Id, code = code },
-                    //    protocol: Request.Scheme);
-
-                    //   await _emailSender.SendEmailAsync(register.Email, "Confirm your email",
-                    //       $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                   customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName });
-                  //  await _signInManager.SignInAsync(user, isPersistent: false);
-                   // return LocalRedirect(returnUrl);
+                    
+                    customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName });
+                    
                 }
                 foreach (var error in result.Errors)
                 {
@@ -109,12 +97,12 @@ namespace fuzzy_core.Controllers
 
             return Ok(new
             {
-                email = customer.Email               
+                email = customer.Email
             });
-           
+
         }
 
-        private string GetToken(string email )
+        private string GetToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
