@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { User } from '../models/user';
 
 
 @Injectable({
@@ -21,5 +22,10 @@ export class AuthenticationService {
 
         return user;
       }));
+  }
+
+
+  register(user: User) {
+    return this.http.post<any>(`${this.baseUrl}api/account/register`, user);
   }
 }

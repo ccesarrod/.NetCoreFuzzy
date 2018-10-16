@@ -72,6 +72,48 @@ namespace fuzzy_core.Controllers
             });
         }
 
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]RegisterModel register, string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            Customer customer = null;
+            if (ModelState.IsValid)
+            {
+                var user = new IdentityUser { UserName = register.Email, Email = register.Email };
+                var result = await _userManager.CreateAsync(user, register.Password);
+                if (result.Succeeded)
+                {
+                    //  _logger.LogInformation("User created a new account with password.");
+
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { userId = user.Id, code = code },
+                    //    protocol: Request.Scheme);
+
+                    //   await _emailSender.SendEmailAsync(register.Email, "Confirm your email",
+                    //       $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                   customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName });
+                  //  await _signInManager.SignInAsync(user, isPersistent: false);
+                   // return LocalRedirect(returnUrl);
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+
+                }
+            }
+
+            return Ok(new
+            {
+                email = customer.Email               
+            });
+           
+        }
+
         private string GetToken(string email )
         {
             var tokenHandler = new JwtSecurityTokenHandler();

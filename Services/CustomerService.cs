@@ -12,6 +12,8 @@ namespace fuzzy.core.Services
     {
         Customer Authenticate(string email, string password);
         Customer GetById(string id);
+
+       Customer  AddUser(Customer user);
     }
     public class CustomerService : ICustomerService
     {
@@ -76,6 +78,13 @@ namespace fuzzy.core.Services
             }
 
             return true;
+        }
+
+        public Customer AddUser(Customer user)
+        {
+            _context.Add(user);
+
+           return  _context.Find(newuser => newuser.Email == user.Email).Single();
         }
     }
 }
