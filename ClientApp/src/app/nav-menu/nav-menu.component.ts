@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../cart.service';
+import { CartService } from '../services/cart.service';
 import { Observable } from 'rxjs/Observable';
 import { Product } from '../product/product.component';
 
@@ -11,7 +11,7 @@ import { Product } from '../product/product.component';
 export class NavMenuComponent implements OnInit{
   isExpanded = false;
   shoppingCartItems$: Observable<Product[]>;
-  private itemsInCart: number;
+
 
   constructor(private cartService: CartService) {}
 
@@ -21,9 +21,9 @@ export class NavMenuComponent implements OnInit{
 
   ngOnInit() {
 
-    this.shoppingCartItems$ = this.cartService.getItems();
+    this.shoppingCartItems$ = this.cartService.getCart();
 
-    this.shoppingCartItems$.subscribe(p => this.itemsInCart = p.length);
+    this.shoppingCartItems$.subscribe(p => p);
 
   }
   toggle() {

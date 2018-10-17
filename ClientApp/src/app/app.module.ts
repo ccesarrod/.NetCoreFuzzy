@@ -13,9 +13,10 @@ import { ProductService } from './product/product.service';
 import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category.service';
 import { CategoryProductComponent } from './category-product/category-product.component';
-import {CartService } from './cart.service';
+import {CartService } from './services/cart.service';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component'
+import { RegisterComponent } from './register/register.component';
+import { CartComponent } from './cart/cart.component'
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './register/register.component'
     CategoryComponent,
     CategoryProductComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
