@@ -41,11 +41,11 @@ namespace fuzzy_core.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(login.Email);
-
+                //string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
                     email = user.Email
-
+                   //  Token = tokenString
                 });
             }
 
@@ -113,7 +113,7 @@ namespace fuzzy_core.Controllers
                     new Claim(ClaimTypes.Name, email)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+               // SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);

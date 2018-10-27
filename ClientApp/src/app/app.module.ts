@@ -14,8 +14,9 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category.service';
 import { CategoryProductComponent } from './category-product/category-product.component';
 import {CartService } from './services/cart.service';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+//import { LoginComponent } from './login/login.component';
+//import { RegisterComponent } from './register/register.component';
+import { AccountModule } from "@modules/account/account.module";
 import { CartComponent } from './cart/cart.component'
 
 @NgModule({
@@ -28,14 +29,14 @@ import { CartComponent } from './cart/cart.component'
     ProductComponent,
     CategoryComponent,
     CategoryProductComponent,
-    LoginComponent,
-    RegisterComponent,
+    
     CartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    AccountModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -44,8 +45,8 @@ import { CartComponent } from './cart/cart.component'
       { path: 'fetch-products', component: ProductComponent },
       { path: 'fetch-categories', component: CategoryComponent },
       { path: 'fetch-category-product/:id', component: CategoryProductComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'login', loadChildren: "@modules/account/account.module#AccountModule"},
+      
     ])
   ],
   providers: [ProductService,CategoryService,CartService],

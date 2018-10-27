@@ -22,7 +22,6 @@ export class NavMenuComponent implements OnInit{
   ngOnInit() {
 
     this.shoppingCartItems$ = this.cartService.getCart();
-
     this.shoppingCartItems$.subscribe(p => p);
 
   }

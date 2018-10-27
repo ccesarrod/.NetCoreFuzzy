@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 
 
@@ -42,7 +42,11 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.loginService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
        .subscribe(
-        data => {
+      data => {
+        if (data && data.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(data));
+        }
           this.router.navigate([this.returnUrl]);
         },
         error => {
