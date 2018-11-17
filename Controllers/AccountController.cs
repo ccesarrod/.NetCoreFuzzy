@@ -44,7 +44,8 @@ namespace fuzzy_core.Controllers
                 //string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
-                    email = user.Email
+                    email = user.Email,
+                    userName = user.UserName
                    //  Token = tokenString
                 });
             }

@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
+  returnUrl: string='';
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,10 +44,11 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
        .subscribe(
       data => {
-        if (data && data.token) {
+        if (data) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(data));
+          localStorage.setItem('currentUser', JSON.stringify(data));         
         }
+       
           this.router.navigate([this.returnUrl]);
         },
         error => {
