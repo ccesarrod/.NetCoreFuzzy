@@ -49,6 +49,7 @@ export class NavMenuComponent implements OnInit{
       localStorage.removeItem('currentUser');
       this.isLogin = false;
       this.loginAction = 'Login';
+      this.userName = '';
 
     }
     else {

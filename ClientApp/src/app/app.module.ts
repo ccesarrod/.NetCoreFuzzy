@@ -14,8 +14,7 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryService } from './category/category.service';
 import { CategoryProductComponent } from './category-product/category-product.component';
 import {CartService } from './services/cart.service';
-//import { LoginComponent } from './login/login.component';
-//import { RegisterComponent } from './register/register.component';
+import { AuthGuardService } from './services/auth-guard.service';
 import { AccountModule } from "@modules/account/account.module";
 import { CartComponent } from './cart/cart.component'
 
@@ -39,17 +38,21 @@ import { CartComponent } from './cart/cart.component'
     AccountModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full'             
+      },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuardService]  },
       { path: 'fetch-products', component: ProductComponent },
-      { path: 'fetch-categories', component: CategoryComponent },
-      { path: 'fetch-category-product/:id', component: CategoryProductComponent },
+      { path: 'fetch-categories', component: CategoryComponent  },
+      { path: 'fetch-category-product/:id', component: CategoryProductComponent,  canActivate: [AuthGuardService] },
       { path: 'login', loadChildren: "@modules/account/account.module#AccountModule"},
       
     ])
   ],
-  providers: [ProductService,CategoryService,CartService],
+  providers: [ProductService, CategoryService, CartService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

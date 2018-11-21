@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -32,6 +32,10 @@ export class AuthenticationService {
 
   get authenticatedUser(): BehaviorSubject<any> {
     return this.profile$ as BehaviorSubject<any>;
+  }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.authenticatedUser.pipe(map(value => (value ? true : false)));
   }
 
   register(user: User) {
