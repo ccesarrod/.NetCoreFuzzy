@@ -23,7 +23,7 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (user) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('currentUser', user);
           this.emit({ user });
         }
         return user;
@@ -34,10 +34,11 @@ export class AuthenticationService {
     return this.profile$ as BehaviorSubject<any>;
   }
 
-  public isAuthenticated(): Observable<boolean> {
-    return this.authenticatedUser.pipe(map(value => (value ? true : false)));
+  logout() {
+      
+    localStorage.removeItem('currentUser');
+    this.emit(null);
   }
-
   register(user: User) {
     return this.http.post<any>(`${this.baseUrl}api/account/register`, user);
   }

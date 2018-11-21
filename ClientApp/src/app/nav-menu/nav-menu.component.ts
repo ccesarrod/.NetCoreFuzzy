@@ -29,8 +29,8 @@ export class NavMenuComponent implements OnInit{
     this.shoppingCartItems$.subscribe(p => p);
     this.authenticationService.authenticatedUser.subscribe(currentUser =>
     {
-      if (currentUser.user) {
-        const user = currentUser.user;
+      if (currentUser.user !== undefined) {
+        const user = currentUser;
         this.userName = user.userName;
         this.isLogin = true;
         this.loginAction = 'Log out'
@@ -46,7 +46,7 @@ export class NavMenuComponent implements OnInit{
 
   login() {
     if (this.isLogin) {
-      localStorage.removeItem('currentUser');
+      this.authenticationService.logout();
       this.isLogin = false;
       this.loginAction = 'Login';
       this.userName = '';

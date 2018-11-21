@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -15,21 +15,23 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string='';
+  returnUrl: string = '';
 
 
   constructor(
     private formBuilder: FormBuilder,
     private loginService: AuthenticationService,
     private router: Router,
-    ) { }
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
-    })   
+    })
 
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit() {
@@ -42,14 +44,15 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.loginService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
-       .subscribe(
-      data => {
-        if (data) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(data));         
-        }
-       
-          this.router.navigate([this.returnUrl]);
+      .subscribe(
+        data => {
+          if (data) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+          //  localStorage.setItem('currentUser', JSON.stringify(data));
+            this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            this.router.navigate([this.returnUrl]);
+          }
+
         },
         error => {
           console.error(error);
