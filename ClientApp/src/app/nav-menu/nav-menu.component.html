@@ -33,7 +33,7 @@
           </a>
         </li>
         <li [routerLinkActive]='["link-active"]' class="nav-item active">
-          <a href="#" id="lastVal" class="pl-5 float-right"><img src="../../assets/glyphicons-203-shopping-cart.png" class="bg-info rounded" />{{(shoppingCartItems$ | async).length}}</a>
+          <a [routerLink]='["/cart"]' id="lastVal" class="pl-5 float-right"><img src="../../assets/glyphicons-203-shopping-cart.png" class="bg-info rounded" />{{(shoppingCartItems$ | async).length}}</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

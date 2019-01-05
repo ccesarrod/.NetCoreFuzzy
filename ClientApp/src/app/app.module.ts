@@ -16,7 +16,7 @@ import { CategoryProductComponent } from './category-product/category-product.co
 import {CartService } from './services/cart.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AccountModule } from "@modules/account/account.module";
-import { CartComponent } from './cart/cart.component'
+import { CartComponent } from '@modules/cart/cart.component'
 
 @NgModule({
   declarations: [
@@ -27,8 +27,7 @@ import { CartComponent } from './cart/cart.component'
     FetchDataComponent,
     ProductComponent,
     CategoryComponent,
-    CategoryProductComponent,
-    
+    CategoryProductComponent,    
     CartComponent
   ],
   imports: [
@@ -48,7 +47,8 @@ import { CartComponent } from './cart/cart.component'
       { path: 'fetch-products', component: ProductComponent },
       { path: 'fetch-categories', component: CategoryComponent  },
       { path: 'fetch-category-product/:id', component: CategoryProductComponent,  canActivate: [AuthGuardService] },
-      { path: 'login', loadChildren: "@modules/account/account.module#AccountModule"},
+      { path: 'login', loadChildren: "@modules/account/account.module#AccountModule" },
+      {path: 'cart', component:CartComponent}
       
     ])
   ],

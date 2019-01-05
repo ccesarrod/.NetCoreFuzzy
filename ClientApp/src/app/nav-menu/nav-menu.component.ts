@@ -26,11 +26,10 @@ export class NavMenuComponent implements OnInit{
   ngOnInit() {
 
     this.shoppingCartItems$ = this.cartService.getCart();
-    this.shoppingCartItems$.subscribe(p => p);
-    var x = this.authenticationService.authenticatedUser.value;
+    this.shoppingCartItems$.subscribe(p => p);    
     this.authenticationService.authenticatedUser.subscribe(currentUser =>
     {
-      if (currentUser !== null) {
+      if (currentUser !== null && currentUser.userName !== undefined) {
         const user = currentUser;
         this.userName = user.userName;
         this.isLogin = true;
@@ -51,7 +50,7 @@ export class NavMenuComponent implements OnInit{
       this.isLogin = false;
       this.loginAction = 'Login';
       this.userName = '';
-      this.router.navigate(['']);
+      this.router.navigate(['/']);
     }
     else {
       this.router.navigate(['login']);
