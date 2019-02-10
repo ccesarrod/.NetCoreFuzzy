@@ -36,7 +36,7 @@ namespace fuzzy_core.Controllers
             var mockProduct = new Product { ProductName = "Chai", CategoryID = 1, QuantityPerUnit = "10 boxes", UnitPrice = 18, UnitsInStock = 10, UnitsOnOrder = 1, ReorderLevel = 10, Discontinued = false, ProductID = 1 };
             var category = _repository.Find(x => x.CategoryID == id).SingleOrDefault();
             return _productRepository.Find(p => p.CategoryID == category.CategoryID);
-            //4265852142
+             //4265852142
             //{
             //    mockProduct
             //};
