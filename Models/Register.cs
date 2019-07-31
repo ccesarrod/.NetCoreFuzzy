@@ -5,9 +5,9 @@ namespace fuzzy.core.Models
     public class RegisterModel
     {
         [Required]
-        [StringLength(5, ErrorMessage = "The {0} must be at least {1} characters long.", MinimumLength = 5)]
+     //   [StringLength(5, ErrorMessage = "The {0} must be at least {1} characters long.", MinimumLength = 5)]
         [DataType(DataType.Text)]
-        [Display(Name = "User Name")]
+        [Display(Name = "UserName")]
 
         public string UserName { get; set; }
 

@@ -33,7 +33,8 @@ namespace fuzzy_core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+         
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -44,7 +45,7 @@ namespace fuzzy_core
             services.AddDbContext<CustomerOrderContext>(options =>
             {
                
-                // var str = @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=WebApp.Models.MultiTenantContext;Integrated Security=True";
+                //var str = @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=WebApp.Models.MultiTenantContext;Integrated Security=True";
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
 
@@ -170,7 +171,7 @@ namespace fuzzy_core
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                  //  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

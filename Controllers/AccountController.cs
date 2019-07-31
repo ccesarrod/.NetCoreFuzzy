@@ -81,7 +81,7 @@ namespace fuzzy_core.Controllers
             Customer customer = null;
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = register.Email, Email = register.Email };
+                var user = new IdentityUser { UserName = register.UserName, Email = register.Email };
                 var result = await _userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
@@ -92,7 +92,7 @@ namespace fuzzy_core.Controllers
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
-
+                  
                 }
             }
 
