@@ -22,6 +22,7 @@ namespace fuzzy_core.Controllers
         private readonly AppSettings _appSettings;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private static object _lock = new object();
 
         public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
@@ -35,18 +36,18 @@ namespace fuzzy_core.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]Login login)
         {
-            var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, lockoutOnFailure: false);
+            var theUser = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, false, lockoutOnFailure: false);
 
 
-            if (result.Succeeded)
+            if (theUser.Succeeded)
             {
-                var user = await _userManager.FindByEmailAsync(login.Email);
-                //string tokenString = GetToken(user.Email);
+                var user = await _userManager.FindByNameAsync(login.UserName);
+                string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
                     email = user.Email,
-                    userName = user.UserName
-                   //  Token = tokenString
+                    userName = user.UserName,
+                     Token = tokenString
                 });
             }
 
@@ -57,7 +58,7 @@ namespace fuzzy_core.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]Login login)
         {
-            var user = _customerService.Authenticate(login.Email, login.Password);
+            var user = _customerService.Authenticate(login.UserName, login.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -79,14 +80,22 @@ namespace fuzzy_core.Controllers
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             Customer customer = null;
+            
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = register.UserName, Email = register.Email };
                 var result = await _userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
-                    
-                    customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName });
+                    try
+                    {
+                        var id = GetShortID();
+                        customer = _customerService.AddUser(new Customer { Email = register.Email, ContactName = register.FirstName + "  " + register.LastName, CompanyName= "Company name", CustomerID=id });
+                    }
+                    catch(Exception ex)
+                    {
+                        return BadRequest(ex);
+                    }
                     
                 }
                 foreach (var error in result.Errors)
@@ -119,6 +128,24 @@ namespace fuzzy_core.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
             return tokenString;
+        }
+
+      
+
+        /// <summary>
+        /// Return a string of random hexadecimal values which is 6 characters long and relatively unique.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>In testing, result was unique for at least 10,000,000 values obtained in a loop.</remarks>
+        public static string GetShortID()
+        {
+            lock (_lock)
+            {
+                var crypto = new System.Security.Cryptography.RNGCryptoServiceProvider();
+                var bytes = new byte[4];
+                crypto.GetBytes(bytes,0,4); // get an array of random bytes.      
+                return BitConverter.ToString(bytes,0,4).Replace("-", string.Empty).Substring(0,5); // convert array to hex values.
+            }
         }
     }
 }
