@@ -20,13 +20,13 @@
         </tr>
         <!-- empty cart message -->
         <tr >
-          <td class="text-center" colspan="4">
+          <td class="text-center" colspan="4" *ngIf="cart.length == 0">
             Your cart is empty.
           </td>
         </tr>
         <!-- cart items -->
-        <tr >
-          <td>item.name</td>
+        <tr  *ngFor="let item of cart" >
+          <td>{{item.productName}}</td>
           <td class="tdCenter">
             <div class="input-append">
               <!-- use type=tel instead of to prevent spinners -->

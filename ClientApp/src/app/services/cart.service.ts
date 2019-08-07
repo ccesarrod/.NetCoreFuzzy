@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../product/product.component';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable()
 export class CartService {
@@ -20,7 +20,7 @@ export class CartService {
 
   }
 
-  getCart(): Observable<Product[]> {
+  getCart(): Subject<Product[]> {
 
     if (this.itemsInCartSubject != null)
       this.itemsInCartSubject.next(this.itemsInCart);
