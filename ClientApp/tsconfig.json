@@ -23,6 +23,12 @@
       ],
       "@modules/*": [
         "app/modules/*"
+      ],
+      "@environments/*": [
+        "./src/environments/*"
+      ],
+      "@components/*": [
+        "app/*"
       ]
     }
   }
