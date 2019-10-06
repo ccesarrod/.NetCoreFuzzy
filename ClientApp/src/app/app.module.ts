@@ -47,7 +47,7 @@ import { CartComponent } from '@modules/cart/cart.component'
       { path: 'fetch-products', component: ProductComponent },
       { path: 'fetch-categories', component: CategoryComponent  },
       { path: 'fetch-category-product/:id', component: CategoryProductComponent,  canActivate: [AuthGuardService] },
-      { path: 'login', loadChildren: "@modules/account/account.module#AccountModule" },
+      { path: 'login', loadChildren: () => import('@modules/account/account.module').then(m => m.AccountModule) },
       {path: 'cart', component:CartComponent}
       
     ])
