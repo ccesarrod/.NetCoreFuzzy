@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
 
 export interface Product {
   productName: string;
-  productId: number;
+  productID: number;
   categoryId?: number;
   quantityPerUnit: string;
   unitPrice?: number;

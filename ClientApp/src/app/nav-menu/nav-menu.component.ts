@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Product } from '../product/product.component';
 import { AuthenticationService } from '@services/authentication.service';
 import { Router } from '@angular/router';
+import { ICartItem } from '@components/models/cartItem';
 
 @Component({
   selector: 'app-nav-menu',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class NavMenuComponent implements OnInit{
   isExpanded = false;
-  shoppingCartItems$: Observable<Product[]>;
+  shoppingCartItems$: Observable<ICartItem[]>;
   userName: string = "";
   loginAction: string = "Login";
   isLogin: boolean = false;

@@ -1,32 +1,100 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product } from '../product/product.component';
+import { Product } from '@components/product/product.component';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { ICartItem } from '@components/models/cartItem';
+import * as _ from 'lodash';
 
 @Injectable()
 export class CartService {
-  private itemsInCartSubject: BehaviorSubject<Product[]> = new BehaviorSubject([]);
-  private itemsInCart: Product[] = [];
+  private itemsInCartSubject: BehaviorSubject<ICartItem[]> = new BehaviorSubject([]);
+  private cart: ICartItem[] = [];
 
   constructor(private httpclient: HttpClient) {
 
-    this.itemsInCartSubject.subscribe(p => this.itemsInCart = p);
+    this.itemsInCartSubject.subscribe(p => this.cart = p);
   }
 
 
   addProduct(item: Product) {
-    this.itemsInCartSubject.next([...this.itemsInCart, item]);
+    this.addNewItemToCart(item);
+   
+    this.itemsInCartSubject.next([...this.cart]);
 
   }
 
-  getCart(): Subject<Product[]> {
+  removeItemFromCart(item: ICartItem) {
+    _.remove(this.cart, (e)=> {
+       e.id  === item.id
+    });
+    
+  }
 
+  addNewItemToCart(item: Product) {
+   // if (this.itemsInCart.length > 0) {
+      var index = this.cart.findIndex(x => {
+        return x.id === item.productID;
+    });
+
+    if (index === -1) {
+      this.cart.push(this.buildNewCartItem(item));
+    }
+    else {
+      this.cart[index].quantity++;
+    }
+  
+  }
+
+  buildNewCartItem(item: Product) {
+    const cartItem: ICartItem = {
+      name: item.productName,
+      price: item.unitPrice,
+      id: item.productID,
+      quantity: 1
+    };
+    return cartItem;
+  }
+
+  getCart(): Subject<ICartItem[]> {
+    debugger;
     if (this.itemsInCartSubject != null)
-      this.itemsInCartSubject.next(this.itemsInCart);
+      this.itemsInCartSubject.next(this.cart);
 
     return this.itemsInCartSubject;
   }
 
+  totalCount() {
 
+    var count = this.cart.map(item => item.quantity)
+      .reduce((prev, curr) => prev + curr, 0);
+    return count;
+  }
+
+
+  totalPrice() {
+    let total = this.cart.map(item => item.quantity * item.price)
+      .reduce((prev, curr) => prev + curr, 0);
+
+    return total;
+  }
+
+  addQuantity(item: ICartItem) {
+    let result = this.cart.find(x => {
+     return x.id === item.id
+    });
+
+    result.quantity++;
+  }
+
+  removeQuantity(item: ICartItem) {
+    let result = this.cart.find(x => {
+      return x.id === item.id
+    });
+
+    if (result.quantity <= 0)
+      result.quantity = 0;
+      else
+      result.quantity--
+  }
 }

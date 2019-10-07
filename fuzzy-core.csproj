@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\category\category.service.ts" />
+    <None Remove="ClientApp\src\app\models\cartItem.ts" />
     <None Remove="ClientApp\src\app\models\user.ts" />
     <None Remove="ClientApp\src\app\modules\account.module.ts" />
     <None Remove="ClientApp\src\app\modules\account\account-routing.module.ts" />
@@ -50,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\cartItem.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\category.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\modules\account\account.module.ts" />
