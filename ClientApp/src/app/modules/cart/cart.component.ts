@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '@services/cart.service';
 import { ICartItem } from '@components/models/cartItem';
+import { AuthenticationService } from '@services/authentication.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,7 +11,7 @@ import { ICartItem } from '@components/models/cartItem';
 export class CartComponent implements OnInit {
 
   public cart:any;
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,private authService: AuthenticationService) { }
 
  
 
@@ -29,6 +30,14 @@ export class CartComponent implements OnInit {
     this.cartService.removeQuantity(item);
   }
 
+  saveCart() {
+    this.cartService.save().subscribe(x => {
+
+      this.authService.authenticatedUser.value.cart = this.cart;
+
+    });
+  }
+
   get totalCount() {
 
     return this.cartService.totalCount();    
@@ -38,5 +47,7 @@ export class CartComponent implements OnInit {
   get totalPrice() {
     return this.cartService.totalPrice();
   }
+
+  
 
 }

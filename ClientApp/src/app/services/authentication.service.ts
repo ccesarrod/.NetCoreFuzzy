@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'environments/environment';
 
 
 @Injectable({
@@ -11,23 +12,26 @@ import { Subject, BehaviorSubject, Observable } from 'rxjs';
 export class AuthenticationService {
   profile$: Subject<any> = new BehaviorSubject<any>({});
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private http: HttpClient) { }
 
   emit(value: any) {
     this.profile$.next(value);
   }
 
   login(username: string, password: string) {
-    return this.http.post<any>(`${this.baseUrl}api/account/login`, {userName: username, password: password })
-      .pipe(map(user => {
-        // login successful if there's a jwt token in the response
-        if (user) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', user);
-          this.emit( user );
-        }
-        return user;
-      }));
+    this.logout();
+    if (!localStorage.getItem('currentUser')) {
+      return this.http.post<any>(`${environment.apiUrl}account/login`, { userName: username, password: password })
+        .pipe(map(user => {
+          // login successful if there's a jwt token in the response
+          if (user) {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.emit(user);
+          }
+          return user;
+        }));
+    }
   }
 
   get authenticatedUser(): BehaviorSubject<any> {
@@ -40,6 +44,6 @@ export class AuthenticationService {
     this.emit(null);
   }
   register(user: User) {
-    return this.http.post<any>(`${this.baseUrl}api/account/register`, user);
+    return this.http.post<any>(`${environment.apiUrl}account/register`, user);
   }
 }

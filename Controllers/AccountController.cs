@@ -1,4 +1,5 @@
-﻿using fuzzy.core.Entities;
+﻿using fuzzy.core.DataCore.Contracts;
+using fuzzy.core.Entities;
 using fuzzy.core.Models;
 using fuzzy.core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,14 +23,17 @@ namespace fuzzy_core.Controllers
         private readonly AppSettings _appSettings;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ICustomerRepository _customerRepository;
         private static object _lock = new object();
 
-        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountController(ICustomerService customerService, IOptions<AppSettings> appSettings, 
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, ICustomerRepository customerRepository)
         {
             _customerService = customerService;
             _appSettings = appSettings.Value;
             _signInManager = signInManager;
             _userManager = userManager;
+            _customerRepository = customerRepository;
         }
 
         [AllowAnonymous]
@@ -42,11 +46,14 @@ namespace fuzzy_core.Controllers
             if (theUser.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
+                //var currentCart = _customerRepository.SyncShoppingCart(model.Email, cartFromCookie);
+                var currentCart = _customerRepository.GetShoopingCart(user.Email);
                 string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
                     email = user.Email,
                     userName = user.UserName,
+                    cart = currentCart,
                      Token = tokenString
                 });
             }

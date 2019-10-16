@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using fuzzy.core.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace fuzzy.core.Entities
 {
@@ -17,5 +19,7 @@ namespace fuzzy.core.Entities
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
+
+        public virtual List<CartDetails> Cart { get; set; }
     }
 }

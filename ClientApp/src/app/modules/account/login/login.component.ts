@@ -46,9 +46,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.loginForm.controls.userName.value, this.loginForm.controls.password.value)
       .subscribe(
         data => {
-          if (data) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-          //  localStorage.setItem('currentUser', JSON.stringify(data));
+          if (data) {         
             this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
             this.router.navigate([this.returnUrl]);
           }

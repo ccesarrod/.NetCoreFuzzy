@@ -123,6 +123,7 @@ namespace fuzzy_core
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Customer>, CustomerRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
             
         }
@@ -170,8 +171,8 @@ namespace fuzzy_core
 
                 if (env.IsDevelopment())
                 {
-                  // spa.UseAngularCliServer(npmScript: "start");
-                  spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                  spa.UseAngularCliServer(npmScript: "start");
+                  //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

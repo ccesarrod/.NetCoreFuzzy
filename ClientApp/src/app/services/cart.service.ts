@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ICartItem } from '@components/models/cartItem';
 import * as _ from 'lodash';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class CartService {
@@ -57,7 +58,7 @@ export class CartService {
   }
 
   getCart(): Subject<ICartItem[]> {
-    debugger;
+  
     if (this.itemsInCartSubject != null)
       this.itemsInCartSubject.next(this.cart);
 
@@ -96,5 +97,11 @@ export class CartService {
       result.quantity = 0;
       else
       result.quantity--
+  }
+
+  save() {
+    if (this.cart.length > 0) {
+    return  this.httpclient.post<any>(`${environment.apiUrl}cart`, this.cart);
+    }
   }
 }
