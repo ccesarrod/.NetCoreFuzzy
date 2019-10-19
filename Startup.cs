@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using fuzzy.core.Services;
 using fuzzy.core.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace fuzzy_core
 {
@@ -33,8 +34,10 @@ namespace fuzzy_core
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+           
+                    
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -54,6 +57,7 @@ namespace fuzzy_core
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
               
             });
+          
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -90,6 +94,7 @@ namespace fuzzy_core
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+               
             })
             .AddJwtBearer(x =>
             {
@@ -99,7 +104,7 @@ namespace fuzzy_core
                     {
                         var customerService = context.HttpContext.RequestServices.GetRequiredService<ICustomerService>();
                         var userId = context.Principal.Identity.Name;
-                        var user = customerService.GetById(userId);
+                        var user = customerService.getByEmail(userId);
                         if (user == null)
                         {
                             // return unauthorized if user no longer exists
@@ -112,11 +117,23 @@ namespace fuzzy_core
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuerSigningKey = false,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    //Usually, this is your application base URL
+                    ValidIssuer = "http://localhost:52070",
+                    ValidateAudience = false,
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(JwtBearerDefaults.AuthenticationScheme, policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+
+                });
             });
 
 
@@ -157,8 +174,9 @@ namespace fuzzy_core
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "default",
+               routes.MapRoute(
+                   name: "default",
+                   
                     template: "{controller}/{action=Index}/{id?}");
             });
 

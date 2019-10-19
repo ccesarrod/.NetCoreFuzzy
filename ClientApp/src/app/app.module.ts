@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -17,6 +17,7 @@ import {CartService } from './services/cart.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AccountModule } from "@modules/account/account.module";
 import { CartComponent } from '@modules/cart/cart.component'
+import { JwtInterceptor} from './services/jwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { CartComponent } from '@modules/cart/cart.component'
       
     ])
   ],
-  providers: [ProductService, CategoryService, CartService, AuthGuardService],
+  providers: [ProductService, CategoryService, CartService, AuthGuardService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

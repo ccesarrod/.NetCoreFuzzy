@@ -1,6 +1,8 @@
 ﻿using fuzzy.core.DataCore.Contracts;
 using fuzzy.core.Entities;
 using fuzzy.core.Models;
+using fuzzy.core.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,18 +15,18 @@ namespace fuzzy_core.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerService _customerRepository;
 
-        public CartController(ICustomerRepository customerRepository)
+        public CartController(ICustomerService customerRepository)
         {
             _customerRepository = customerRepository;
         }
 
         [HttpPost]
-        
+        [Authorize(JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult Save(Cart[] cartView)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identities.Any())
             {
                 var customer = GetAutenticatedCustomer();
                 _customerRepository.SyncShoppingCart(customer.Email, cartView.ToList());
@@ -46,8 +48,8 @@ namespace fuzzy_core.Controllers
         private Customer GetCustomerByEmail()
         {
             var user = HttpContext.User.Identity.Name;
-           
-            return _customerRepository.Find(x => x.Email == user).FirstOrDefault();
+
+            return _customerRepository.getByEmail(user);
         }
     }
 }

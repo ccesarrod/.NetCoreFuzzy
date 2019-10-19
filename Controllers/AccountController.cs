@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -47,7 +48,7 @@ namespace fuzzy_core.Controllers
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
                 //var currentCart = _customerRepository.SyncShoppingCart(model.Email, cartFromCookie);
-                var currentCart = _customerRepository.GetShoopingCart(user.Email);
+                var currentCart = _customerService.GetShoopingCart(user.Email);
                 string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
@@ -121,19 +122,34 @@ namespace fuzzy_core.Controllers
 
         private string GetToken(string email)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            String tokenString="";
+            try
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
                     new Claim(ClaimTypes.Name, email)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-               // SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
+                    }),
+                    //  Audience = "http://localhost/4200",
+                    // EncryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.None),
+                    Issuer = "http://localhost:52070",
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                //  var token= new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+                tokenString = tokenHandler.WriteToken(token);
+
+                return tokenString;
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
+
             return tokenString;
         }
 

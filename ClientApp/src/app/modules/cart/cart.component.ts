@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
   saveCart() {
     this.cartService.save().subscribe(x => {
 
-      this.authService.authenticatedUser.value.cart = this.cart;
+      this.authService.currentUserValue.cart = this.cart;
 
     });
   }

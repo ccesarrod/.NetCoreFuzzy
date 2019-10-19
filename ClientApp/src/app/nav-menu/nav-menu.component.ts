@@ -25,10 +25,10 @@ export class NavMenuComponent implements OnInit{
   }
 
   ngOnInit() {
-
+    debugger;
     this.shoppingCartItems$ = this.cartService.getCart();
     this.shoppingCartItems$.subscribe(p => p);    
-    this.authenticationService.authenticatedUser.subscribe(currentUser =>
+    this.authenticationService.currentUser.subscribe(currentUser =>
     {
       if (currentUser !== null && currentUser.userName !== undefined) {
         const user = currentUser;

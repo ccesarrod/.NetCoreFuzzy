@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +49,7 @@
     <None Remove="ClientApp\src\app\modules\account\account-routing.module.ts" />
     <None Remove="ClientApp\src\app\product\product.component.ts" />
     <None Remove="ClientApp\src\app\services\auth-guard.service.ts" />
+    <None Remove="ClientApp\src\app\services\jwtInterceptor.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +60,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\modules\account\account-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\product\product.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\jwtInterceptor.ts" />
   </ItemGroup>
 
   <ItemGroup>
