@@ -97,11 +97,22 @@ export class CartService {
       result.quantity = 0;
       else
       result.quantity--
+
+      if (result.quantity == 0){
+        this.cart = this.cart.filter(obj => obj.id !== item.id);
+        this.itemsInCartSubject.next([...this.cart]);
+      }
   }
 
   save() {
+    debugger;
     if (this.cart.length > 0) {
     return  this.httpclient.post<any>(`${environment.apiUrl}cart`, this.cart);
     }
+  }
+
+  assignCart(cartList:any[]){
+    this.cart = cartList;
+    this.itemsInCartSubject.next([...this.cart]);
   }
 }

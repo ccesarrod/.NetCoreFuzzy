@@ -142,7 +142,8 @@ namespace fuzzy_core
             services.AddScoped<IRepository<Customer>, CustomerRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
-            
+            services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

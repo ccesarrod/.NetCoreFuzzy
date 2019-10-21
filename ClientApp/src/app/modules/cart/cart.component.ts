@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
  
 
   ngOnInit() {
-    debugger
+    
     this.cartService.getCart().subscribe(data=> {
       this.cart = data;
     });

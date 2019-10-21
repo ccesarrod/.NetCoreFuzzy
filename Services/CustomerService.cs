@@ -23,13 +23,15 @@ namespace fuzzy.core.Services
     }
     public class CustomerService : ICustomerService
     {
-        private IRepository<Customer> _customerRepository;
+        private ICustomerRepository _customerRepository;
         private readonly IProductRepository _productRepository;
+        private  ICartDetailsRepository _cartDetailsRepository;
 
-        public CustomerService(IRepository<Customer> context, IProductRepository product)
+        public CustomerService(ICustomerRepository context, IProductRepository product, ICartDetailsRepository cartDetailsRepository)
         {
             _customerRepository = context;
             this._productRepository = product;
+            _cartDetailsRepository = cartDetailsRepository;
         }
         public Customer Authenticate(string email, string password)
         {
@@ -38,17 +40,11 @@ namespace fuzzy.core.Services
 
             var user = _customerRepository.GetAll().SingleOrDefault(x => x.Email == email);
 
-            // check if username exists
+         
             if (user == null)
                 return null;
 
-            // check if password is correct
-
-            
-         //   if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-              //  return null;
-
-            // authentication successful
+         
             return user;
         }
 
@@ -126,7 +122,12 @@ namespace fuzzy.core.Services
                 if (customer.Cart == null) {
                     customer.Cart = new List<CartDetails>();
                 }
-                
+
+               var cartList = _cartDetailsRepository.Find(x=>x.CustomerID == customer.CustomerID).ToList();
+                cartList.ForEach(m => _cartDetailsRepository.Delete(m));
+                _cartDetailsRepository.Save();
+                customer.Cart.RemoveAll(x => x.CustomerID != null);
+
                 foreach (var item in cartUpdates)
                 {
                     var cartItem = customer.Cart.SingleOrDefault(x => x.ProductId == item.Id);
@@ -150,6 +151,7 @@ namespace fuzzy.core.Services
             //customer.Cart.RemoveAll(x => !cartUpdates.Exists(y => y.Id == x.ProductId));
 
             _customerRepository.Update(customer);
+            _customerRepository.Save();
             return customer.Cart;
         }
 
@@ -162,7 +164,9 @@ namespace fuzzy.core.Services
         {
 
             var customer = getByEmail(userEmail);
-            return customer != null ? customer.Cart : new List<CartDetails>();
+            var cart = _cartDetailsRepository.Find(item => item.CustomerID == customer.CustomerID).ToList();
+            customer.Cart = cart.Any() ? cart : new List<CartDetails>();
+            return cart;
         }
     }
 }

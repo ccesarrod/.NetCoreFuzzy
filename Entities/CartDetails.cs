@@ -1,14 +1,20 @@
-﻿using fuzzy.core.Entities;
+﻿
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace fuzzy.core.Models
+namespace fuzzy.core.Entities
 {
 
     public class CartDetails 
         {
-            public String CustomerID { get; set; }
+                    
+            [Key]
             public int Id { get; set; }
-            public int ProductId { get; set; }
+        [MaxLength(5)]
+       
+        public string CustomerID { get; set; }
+        public int ProductId { get; set; }
             public int Quantity { get; set; }
             public decimal Price { get; set; }
 

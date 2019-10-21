@@ -6,6 +6,11 @@ namespace fuzzy.core.Entities
 {
     public class Customer
     {
+        public Customer()
+        {
+            Cart = new List<CartDetails>();
+
+        }
         public string CustomerID { get; set; }
 
         public string CompanyName { get; set; }

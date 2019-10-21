@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,12 +50,13 @@ namespace fuzzy_core.Controllers
                 var user = await _userManager.FindByNameAsync(login.UserName);
                 //var currentCart = _customerRepository.SyncShoppingCart(model.Email, cartFromCookie);
                 var currentCart = _customerService.GetShoopingCart(user.Email);
+                var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity=i.Quantity,Price=i.Price,ProductId = i.ProductId});
                 string tokenString = GetToken(user.Email);
                 return Ok(new
                 {
                     email = user.Email,
                     userName = user.UserName,
-                    cart = currentCart,
+                    cart = list,
                      Token = tokenString
                 });
             }
