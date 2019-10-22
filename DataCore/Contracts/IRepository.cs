@@ -13,7 +13,9 @@ namespace fuzzy.core.DataCore.Contracts
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Save();
+     
 
-        
+
+
     }
 }

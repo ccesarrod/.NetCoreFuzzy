@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace fuzzy.core.DataCore
 {
+    
     public class CustomerOrderContext : DbContext
     {
+        public CustomerOrderContext() { }
         public CustomerOrderContext(DbContextOptions<CustomerOrderContext> options) : base(options) { }
 
         public new DbSet<TEntity> Set<TEntity>() where TEntity : class
