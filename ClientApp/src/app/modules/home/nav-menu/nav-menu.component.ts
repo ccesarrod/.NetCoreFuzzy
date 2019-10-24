@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service';
+import { CartService } from '../../../services/cart.service';
 import { Observable } from 'rxjs/Observable';
-import { Product } from '../product/product.component';
+import { Product } from '../../../product/product.component';
 import { AuthenticationService } from '@services/authentication.service';
 import { Router } from '@angular/router';
 import { ICartItem } from '@components/models/cartItem';
