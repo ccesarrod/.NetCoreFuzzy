@@ -48,7 +48,7 @@ namespace fuzzy_core.Controllers
             if (theUser.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(login.UserName);
-                //var currentCart = _customerRepository.SyncShoppingCart(model.Email, cartFromCookie);
+               
                 var currentCart = _customerService.GetShoopingCart(user.Email);
                 var list = currentCart.Select(i => new Cart() { Id = i.Id, Quantity=i.Quantity,Price=i.Price,ProductId = i.ProductId});
                 string tokenString = GetToken(user.Email);

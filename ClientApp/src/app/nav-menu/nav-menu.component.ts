@@ -13,7 +13,7 @@ import { ICartItem } from '@components/models/cartItem';
 })
 export class NavMenuComponent implements OnInit{
   isExpanded = false;
-  shoppingCartItems$: Observable<ICartItem[]>;
+  shoppingCartItems: Observable<ICartItem[]>;
   userName: string = "";
   loginAction: string = "Login";
   isLogin: boolean = false;
@@ -25,9 +25,9 @@ export class NavMenuComponent implements OnInit{
   }
 
   ngOnInit() {
- 
-    this.shoppingCartItems$ = this.cartService.getCart();
-    this.shoppingCartItems$.subscribe(p => p);    
+
+    this.shoppingCartItems = this.cartService.getCart();
+    this.shoppingCartItems.subscribe(p => p);    
     this.authenticationService.currentUser.subscribe(currentUser =>
     {
       if (currentUser !== null && currentUser.userName !== undefined) {

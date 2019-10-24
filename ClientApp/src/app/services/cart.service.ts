@@ -105,10 +105,10 @@ export class CartService {
   }
 
   save() {
-    debugger;
-    if (this.cart.length > 0) {
+debugger
+   // if (this.cart.length > 0) {
     return  this.httpclient.post<any>(`${environment.apiUrl}cart`, this.cart);
-    }
+  //  }
   }
 
   assignCart(cartList:any[]){

@@ -36,8 +36,8 @@ namespace fuzzy_core
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
-           
-                    
+
+
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -47,7 +47,7 @@ namespace fuzzy_core
 
             services.AddDbContext<CustomerOrderContext>(options =>
             {
-               
+
                 //var str = @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=WebApp.Models.MultiTenantContext;Integrated Security=True";
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
             });
@@ -55,14 +55,14 @@ namespace fuzzy_core
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Northwind"));
-              
+
             });
-          
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-          
+
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -94,7 +94,7 @@ namespace fuzzy_core
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-               
+
             })
             .AddJwtBearer(x =>
             {
@@ -171,14 +171,14 @@ namespace fuzzy_core
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseAuthentication();
-          
+
 
             app.UseMvc(routes =>
             {
-               routes.MapRoute(
-                   name: "default",
-                   
-                    template: "{controller}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+
+                     template: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -190,8 +190,8 @@ namespace fuzzy_core
 
                 if (env.IsDevelopment())
                 {
-                  spa.UseAngularCliServer(npmScript: "start");
-                  //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
