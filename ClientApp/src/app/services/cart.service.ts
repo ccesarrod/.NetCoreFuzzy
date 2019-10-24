@@ -115,4 +115,11 @@ export class CartService {
     this.cart = cartList;
     this.itemsInCartSubject.next([...this.cart]);
   }
+
+  clearCart() {
+   
+      this.cart = [];
+    this.itemsInCartSubject.next([...this.cart]);
+    
+  }
 }

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace fuzzy.core.Services
 {
-   public  interface IInventoryService
+    public interface IInventoryService
     {
         int CheckProductQuantity(int ProductID);
         bool isLowStock(int ProductId);
 
-        string Restock(int Proudct);
+        int UpdateInventory(int quantity);
+
+        void Restock(int Proudct, int quantity);
     }
 
     public class InventoryService : IInventoryService
@@ -25,7 +27,12 @@ namespace fuzzy.core.Services
             throw new NotImplementedException();
         }
 
-        public string Restock(int Proudct)
+        public void Restock(int Proudct, int quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateInventory(int quantity)
         {
             throw new NotImplementedException();
         }

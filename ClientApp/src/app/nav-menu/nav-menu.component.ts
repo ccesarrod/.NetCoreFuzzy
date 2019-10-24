@@ -51,6 +51,7 @@ export class NavMenuComponent implements OnInit{
       this.isLogin = false;
       this.loginAction = 'Login';
       this.userName = '';
+      this.cartService.clearCart();
       this.router.navigate(['/']);
     }
     else {

@@ -15,11 +15,11 @@ namespace fuzzy_core.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        private readonly ICustomerService _customerRepository;
+        private readonly ICustomerService _customerService;
 
         public CartController(ICustomerService customerRepository)
         {
-            _customerRepository = customerRepository;
+            _customerService = customerRepository;
         }
 
         [HttpPost]
@@ -29,7 +29,7 @@ namespace fuzzy_core.Controllers
             if (HttpContext.User.Identities.Any())
             {
                 var customer = GetAutenticatedCustomer();
-                _customerRepository.SyncShoppingCart(customer.Email, cartView.ToList());
+                _customerService.SyncShoppingCart(customer.Email, cartView.ToList());
 
                 return Ok(new {
                     cart = cartView
@@ -49,7 +49,7 @@ namespace fuzzy_core.Controllers
         {
             var user = HttpContext.User.Identity.Name;
 
-            return _customerRepository.getByEmail(user);
+            return _customerService.getByEmail(user);
         }
     }
 }

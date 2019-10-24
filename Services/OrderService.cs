@@ -5,7 +5,7 @@ namespace fuzzy.core.Services
 {
     public interface IOrderService
     {
-        Order ProcessOrder(Order order );
+        Order ProcessOrder(Order order);
         Order Create(OrderDetails details);
     }
 
@@ -20,12 +20,14 @@ namespace fuzzy.core.Services
         public Order Create(OrderDetails details)
         {
             //check inventory product
-             var stock =  _inventoryService.CheckProductQuantity(details.ProductId);
+            var stock = _inventoryService.CheckProductQuantity(details.ProductId);
 
-             if (stock < details.Quantity)
-             {
+            if (stock < details.Quantity)
+            {
                 throw new ApplicationException("Item out stock");
-             }
+            }
+
+            _inventoryService.UpdateInventory(details.Quantity);
 
             return new Order { CustomerID = details.CustomerID, OrderID = 2, OrderItem = details };
         }
